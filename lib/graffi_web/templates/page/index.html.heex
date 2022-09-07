@@ -1,0 +1,97 @@
+<style type="text/css">
+ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+ul li span {
+  float: left;
+  padding-left: 10px;
+}
+
+#color-picker{
+  height: 60px;
+}
+</style>
+
+<section class="phx-hero">
+  <ul id="color-picker">
+    <li><span class="color-pick" data-color="#85ff7a" style='font-size:40px;'>&#x01F7E9;</span></li>
+    <li><span class="color-pick" data-color="#f44336" style='font-size:40px;'>&#x1F7E5;</span></li>
+    <li><span class="color-pick" data-color="#f6b26b" style='font-size:40px;'>&#x1F7E7;</span></li>
+    <li><span class="color-pick" data-color="#ffd966" style='font-size:40px;'>&#x1F7E8;</span></li>
+    <li><span class="color-pick" data-color="#3d85c6" style='font-size:40px;'>&#x1F7E6;</span></li>
+    <li><span class="color-pick" data-color="#674ea7" style='font-size:40px;'>&#x1F7EA;</span></li>
+    <li><span class="color-pick" data-color="#783f04" style='font-size:50px;'>&#x1F7EB;</span></li>
+    <li><span class="color-pick" data-color="#444444" style='font-size:40px;'>&#x2B1B;</span></li>
+  </ul>
+
+  <canvas id="wall" width="300" height="300"></canvas>
+</section>
+
+
+<script>
+  var canvas = document.getElementById("wall");
+  var ctx = canvas.getContext("2d");
+  ctx.fillStyle = "#DDDDDD";
+  ctx.fillRect(0, 0, 300, 300);
+
+  function getCursorPosition(canvas, event) {
+      const rect = canvas.getBoundingClientRect()
+      const x = event.clientX - rect.left
+      const y = event.clientY - rect.top
+      console.log("x: " + x + " y: " + y)
+  }
+
+  canvas.addEventListener('mousedown', function(e) {
+      getCursorPosition(canvas, e)
+      paintCursonPosition(canvas, e)
+  })
+
+  function paintCursonPosition(canvas, event) {
+      const rect = canvas.getBoundingClientRect()
+      const x = event.clientX - rect.left
+      const y = event.clientY - rect.top
+      console.log("x: " + x + " y: " + y)
+      ctx.fillStyle = currentColor;
+      grid_x = Math.floor( x / 10 ) * 10
+      grid_y = Math.floor( y / 10 ) * 10
+      ctx.fillRect(grid_x, grid_y, 10, 10);
+  }
+
+var currentColor = "#783f04";
+
+document.getElementById('color-picker').addEventListener('click', function(e){
+  var picker = document.getElementById("color-picker");
+  
+  for (let child of picker.children) {
+    child.firstChild.style = "font-size:40px";
+  }
+
+  e.srcElement.style = "font-size:50px";
+  currentColor = e.srcElement.dataset.color;
+  console.log(currentColor);
+})
+
+</script>
+
+
+
+<section class="row">
+  <article class="column">
+    <h2>Resources</h2>
+    <ul>
+      <li>
+        <a href="https://github.com/phoenixframework/phoenix">Source</a>
+      </li>
+    </ul>
+  </article>
+  <article class="column">
+    <h2>Help</h2>
+    <ul>
+      <li>
+        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
+      </li>
+    </ul>
+  </article>
+</section>
